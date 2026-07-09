@@ -1,0 +1,243 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Paper by Kumina Labs</title>
+  <desc id="desc">Open Graph image for Paper, a private, fast, offline-first writing and notes tool by Kumina Labs</desc>
+
+  <defs>
+    <radialGradient id="bgGlowLeft" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(170 190) rotate(46) scale(390 320)">
+      <stop stop-color="#2A2F3A" stop-opacity="0.55" />
+      <stop offset="0.56" stop-color="#101216" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#050607" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="bgGlowRight" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(875 230) rotate(142) scale(520 420)">
+      <stop stop-color="#3B2EF4" stop-opacity="0.34"/>
+      <stop offset="0.54" stop-color="#15143B" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#050607" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="bgGlowBottom" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(850 545) rotate(13) scale(320 90)">
+      <stop stop-color="#4F46E5" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#050607" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="paperWhite" x1="405" y1="244" x2="505" y2="353" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DADDE2"/>
+    </linearGradient>
+
+    <linearGradient id="panelStroke" x1="0" y1="0" x2="600" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A9A8C6" stop-opacity="0.62"/>
+      <stop offset="0.52" stop-color="#3D4150" stop-opacity="0.46"/>
+      <stop offset="1" stop-color="#9CA3AF" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="surface" x1="0" y1="0" x2="640" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111215"/>
+      <stop offset="0.55" stop-color="#0B0C0E"/>
+      <stop offset="1" stop-color="#171920"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="26" stdDeviation="24" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="textShadow" x="-15%" y="-20%" width="130%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+
+    <filter id="chipShadow" x="-30%" y="-50%" width="160%" height="200%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+
+    <clipPath id="deviceClip">
+      <rect x="0" y="0" width="640" height="418" rx="36"/>
+    </clipPath>
+
+    <style>
+      .font {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .title {
+        font-size: 62px;
+        font-weight: 800;
+        letter-spacing: -0.07em;
+      }
+
+      .tagline {
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: -0.035em;
+      }
+
+      .body {
+        font-size: 20px;
+        font-weight: 450;
+        letter-spacing: -0.025em;
+      }
+
+      .small {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .mockTitle {
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.045em;
+      }
+
+      .mockBody {
+        font-size: 21px;
+        font-weight: 450;
+        letter-spacing: -0.02em;
+      }
+
+      .noteTitle {
+        font-size: 19px;
+        font-weight: 750;
+        letter-spacing: -0.03em;
+      }
+
+      .noteMeta {
+        font-size: 15px;
+        font-style: italic;
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#050607" />
+  <rect width="1200" height="630" fill="url(#bgGlowLeft)" />
+  <rect width="1200" height="630" fill="url(#bgGlowRight)" />
+  <rect width="1200" height="630" fill="url(#bgGlowBottom)" />
+
+  <g transform="translate(42 52)">
+    <rect x="0" y="0" width="58" height="58" rx="12" fill="#101114" stroke="#5B606A" />
+    <path d="M16 14H34L43 23V44H16V14Z" fill="url(#paperWhite)" />
+    <path d="M34 14V23H43L34 14Z" fill="#F6F7F9" />
+    <path d="M16 14H25L16 23V14Z" fill="#BFC3CA" />
+    <text class="font" x="72" y="39" fill="#B8BBC2" font-size="25" font-weight="700" letter-spacing="-0.04em">Kumina Labs</text>
+  </g>
+
+  <g class="font" filter="url(#textShadow)">
+    <text x="42" y="218" class="title" fill="#FFFFFF">Paper</text>
+
+    <text x="42" y="276" class="tagline" fill="#D9DADF">Write quickly.</text>
+    <text x="42" y="322" class="tagline" fill="#D9DADF">Find it later.</text>
+    <text x="42" y="368" class="tagline" fill="#D9DADF">Own your data.</text>
+
+    <line x1="42" x2="96" y1="412" y2="412" stroke="#D9DADF" stroke-opacity="0.5" />
+
+    <text x="42" y="462" class="body" fill="#A8AAB1">Private, fast, offline-first</text>
+    <text x="42" y="495" class="body" fill="#A8AAB1">writing and notes.</text>
+    <text x="42" y="541" class="body" fill="#9B8CFF">Early access waitlist now open!</text>
+  </g>
+
+  <g class="font" transform="translate(42 562)" filter="url(#chipShadow)">
+    <g transform="translate(0 0)">
+      <rect width="150" height="42" rx="21" fill="#111216" stroke="#4A4F5A" />
+      <text x="46" y="27" fill="#FFFFFF" font-size="16" font-weight="650">Offline-first</text>
+      <path d="M26 10L16 25H25L20 34L34 18H25L30 10H26Z" fill="#7FFFE3"/>
+    </g>
+
+    <g transform="translate(154 0)">
+      <rect width="150" height="42" rx="21" fill="#111216" stroke="#4A4F5A"/>
+      <text x="46" y="27" fill="#FFFFFF" font-size="16" font-weight="650">Searchable</text>
+      <circle cx="25" cy="20" r="7" stroke="#8FFFE8" stroke-width="2"/>
+      <path d="M31 26L38 33" stroke="#8FFFE8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(306 0)">
+      <rect width="150" height="42" rx="21" fill="#111216" stroke="#4A4F5A"/>
+      <text x="47" y="27" fill="#FFFFFF" font-size="16" font-weight="650">Exportable</text>
+      <path d="M25 31V14M25 14L18 21M25 14L32 21" stroke="#8FFFE8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16 30V35H34V30" stroke="#8FFFE8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g transform="translate(500 54) rotate(5)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="670" height="458" rx="42" fill="#07080A" stroke="url(#panelStroke)" stroke-width="2.5" />
+    <rect x="18" y="18" width="634" height="422" rx="31" fill="url(#surface)" stroke="#242832" />
+
+    <g clip-path="url(#deviceClip)" transform="translate(18 18)">
+      <rect x="0" y="0" width="634" height="422" fill="#0A0B0D" />
+      <rect x="0" y="0" width="634" height="56" fill="#131416" />
+      <line x1="0" x2="634" y1="56" y2="56" stroke="#262932" />
+
+      <circle cx="34" cy="28" r="7" fill="#6B6F79" />
+      <circle cx="55" cy="28" r="7" fill="#6B6F79" />
+      <circle cx="76" cy="28" r="7" fill="#6B6F79" />
+
+      <rect x="505" y="12" width="100" height="32" rx="16" fill="#16181D" stroke="#3B404B" />
+      <path d="M522 27L528 33L539 19" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <text class="font small" x="547" y="33" fill="#F5F5F5">Saved</text>
+
+      <rect x="0" y="56" width="170" height="366" fill="#0A0B0D" />
+      <line x1="170" x2="170" y1="56" y2="422" stroke="#282B33" />
+
+      <rect x="17" y="76" width="92" height="42" rx="13" fill="#FFFFFF" />
+      <text class="font" x="56" y="103" fill="#111111" font-size="17" font-weight="800">New</text>
+      <text class="font" x="30" y="104" fill="#111111" font-size="24" font-weight="400">+</text>
+
+      <text class="font noteTitle" x="24" y="160" fill="#FFFFFF">Launch notes</text>
+      <text class="font noteMeta" x="24" y="183" fill="#A7A8AD">Yesterday</text>
+
+      <rect x="13" y="206" width="128" height="74" rx="14" fill="#202226" stroke="#3B3E46"/>
+      <rect x="13" y="206" width="3" height="74" rx="2" fill="#8D7CFF"/>
+      <text class="font noteTitle" x="30" y="231" fill="#FFFFFF">Draft: calm</text>
+      <text class="font noteTitle" x="30" y="253" fill="#FFFFFF">writing</text>
+      <text class="font noteMeta" x="30" y="272" fill="#A7A8AD">Edited now</text>
+
+      <text class="font noteTitle" x="24" y="310" fill="#FFFFFF">Ideas to revisit</text>
+      <text class="font noteMeta" x="24" y="333" fill="#A7A8AD">Local note</text>
+
+      <text class="font noteTitle" x="24" y="364" fill="#FFFFFF">Export</text>
+      <text class="font noteTitle" x="24" y="389" fill="#FFFFFF">checklist</text>
+      <text class="font noteMeta" x="24" y="410" fill="#A7A8AD">Markdown</text>
+
+      <line x1="34" x2="135" y1="428" y2="428" stroke="#1E222A" />
+
+      <rect x="30" y="439" width="112" height="68" rx="14" fill="#0A0B0D" stroke="#313641"/>
+      <circle cx="54" cy="434" r="8" stroke="#D6D7DC" stroke-width="2"/>
+      <path d="M90 440L98 448" stroke="#D6D7DC" stroke-width="2" stroke-linecap="round"/>
+      <text class="font" x="76" y="440" fill="#D8D9DE" font-size="17">Search</text>
+      <text class="font" x="76" y="475" fill="#A8A9AF" font-size="15" font-style="italic">offline</text>
+
+      <rect x="170" y="56" width="444" height="366" fill="#0D0E11"/>
+      <rect x="170" y="56" width="444" height="366" fill="url(#bgGlowRight)" opacity="0.16"/>
+
+      <text class="font" x="210" y="104" fill="#A8A9B0" font-size="20" font-style="italic">Draft</text>
+
+      <rect x="510" y="80" width="94" height="34" rx="17" fill="#0D171A" stroke="#27343B"/>
+      <circle cx="530" cy="97" r="4" fill="#FCA5A5"/>
+      <text class="font" x="546" y="103" fill="#FECACA" font-size="16" font-style="italic">Offline</text>
+
+      <text class="font mockTitle" x="210" y="164" fill="#FFFFFF">A quieter place to</text>
+      <text class="font mockTitle" x="210" y="206" fill="#FFFFFF">write</text>
+
+      <text class="font mockBody" x="210" y="266" fill="#D5D6DB">Start with a blank paper. No workspace</text>
+      <text class="font mockBody" x="210" y="298" fill="#D5D6DB">setup. No account wall. Just a fast</text>
+      <text class="font mockBody" x="210" y="330" fill="#D5D6DB">place to get the thought down.</text>
+
+      <g transform="translate(208 357)">
+        <rect width="90" height="36" rx="14" fill="#101116" stroke="#3A3E49"/>
+        <path d="M28 9L20 22H28L24 30L36 16H29L33 9H28Z" fill="#A7FFF0"/>
+        <text class="font" x="48" y="24" fill="#FFFFFF" font-size="16">Fast</text>
+      </g>
+
+      <g transform="translate(318 357)">
+        <rect width="110" height="36" rx="14" fill="#101116" stroke="#3A3E49"/>
+        <circle cx="28" cy="17" r="7" stroke="#A7FFF0" stroke-width="2"/>
+        <path d="M34 23L41 30" stroke="#A7FFF0" stroke-width="2" stroke-linecap="round"/>
+        <text class="font" x="52" y="24" fill="#FFFFFF" font-size="16">Search</text>
+      </g>
+
+      <g transform="translate(450 357)">
+        <rect width="108" height="36" rx="14" fill="#101116" stroke="#3A3E49"/>
+        <path d="M27 27V10M27 10L21 16M27 10L33 16" stroke="#A7FFF0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 26V31H35V26" stroke="#A7FFF0" stroke-width="2" stroke-linecap="round"/>
+        <text class="font" x="50" y="24" fill="#FFFFFF" font-size="16">Export</text>
+      </g>
+    </g>
+  </g>
+</svg>
