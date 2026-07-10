@@ -3,7 +3,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site";
 
 const ogImage = {
-  url: "/og.svg",
+  url: "/og.png",
   width: 1200,
   height: 630,
   alt: "Paper by Kumina Labs — Write quickly. Find it later. Own your data.",
