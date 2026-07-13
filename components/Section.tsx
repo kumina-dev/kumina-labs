@@ -16,7 +16,10 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <section id={id} className="mx-auto w-full max-w-6xl px-6 py-20">
+    <section
+      id={id}
+      className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-6 sm:py-20"
+    >
       <div className="max-w-2xl">
         {eyebrow ? (
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.22em] text-neutral-500">
@@ -35,7 +38,7 @@ export function Section({
         ) : null}
       </div>
 
-      {children ? <div className="mt-12">{children}</div> : null}
+      {children ? <div className="mt-10 min-w-0 sm:mt-12">{children}</div> : null}
     </section>
   );
 }

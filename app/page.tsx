@@ -14,7 +14,7 @@ export default function HomePage() {
     <main className="min-h-screen overflow-hidden bg-neutral-950 text-white">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_32rem),radial-gradient(circle_at_top_right,rgba(99,102,241,0.16),transparent_28rem)]" />
 
-      <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+      <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-5 sm:px-6 sm:py-6">
         <Link href="/" className="text-sm font-semibold tracking-tight">
           Kumina Labs
         </Link>
@@ -36,15 +36,15 @@ export default function HomePage() {
 
         <Link
           href="#waitlist"
-          className="rounded-full bg-white px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-neutral-200"
+          className="inline-flex h-10 shrink-0 items-center rounded-full bg-white px-3 text-sm font-medium whitespace-nowrap text-neutral-950 transition hover:bg-neutral-200 sm:px-4"
         >
           Join waitlist
         </Link>
       </header>
 
-      <section className="relative z-10 mx-auto grid w-full max-w-6xl gap-14 px-6 pb-24 pt-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:pt-24">
-        <div>
-          <p className="mb-5 inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-neutral-300 backdrop-blur">
+      <section className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-5 pt-12 pb-20 sm:gap-14 sm:px-6 sm:pt-16 sm:pb-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:pt-24">
+        <div className="min-w-0">
+          <p className="mb-5 inline-flex max-w-full rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-neutral-300 backdrop-blur sm:text-sm">
             A focused product lab building Paper first.
           </p>
 
@@ -52,7 +52,7 @@ export default function HomePage() {
             A calmer place to write things down.
           </h1>
 
-          <p className="mt-6 max-w-2xl text-xl leading-8 text-neutral-400">
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-400 sm:text-xl">
             Paper is a private, fast, offline-first writing and notes tool for
             drafts, thoughts, ideas, and anything you want to find later.
           </p>
@@ -170,7 +170,7 @@ export default function HomePage() {
       </Section>
 
       <footer className="relative z-10 border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-8 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>© {new Date().getFullYear()} Kumina Labs.</p>
           <p>Building practical, privacy-conscious software products.</p>
         </div>
