@@ -1,11 +1,17 @@
-import { createClient } from "@supabase/supabase-js";
-import { NextResponse } from "next/server";
 import {
   isTesterIntent,
   WAITLIST_FIELD_LIMITS,
 } from "@/lib/waitlist";
+import {
+  createClient,
+} from "@supabase/supabase-js";
+import { NextResponse } from "next/server";
 
-type ErrorField = "email" | "currentTool" | "pain" | "testerIntent";
+type ErrorField =
+  | "email"
+  | "currentTool"
+  | "pain"
+  | "testerIntent";
 
 type RateLimitEntry = {
   count: number;
@@ -14,13 +20,25 @@ type RateLimitEntry = {
 
 const MAX_REQUEST_BYTES = 8_192;
 const RATE_LIMIT_MAX_REQUESTS = 10;
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1_000;
+const RATE_LIMIT_WINDOW_MS =
+  10 * 60 * 1_000;
 const MAX_RATE_LIMIT_ENTRIES = 5_000;
-const rateLimitEntries = new Map<string, RateLimitEntry>();
 
-function jsonError(message: string, status: number, field?: ErrorField) {
+const rateLimitEntries = new Map<
+  string,
+  RateLimitEntry
+>();
+
+function jsonError(
+  message: string,
+  status: number,
+  field?: ErrorField
+) {
   return NextResponse.json(
-    { message, ...(field ? { field } : {}) },
+    {
+      message,
+      ...(field ? { field } : {}),
+    },
     {
       status,
       headers: {
@@ -32,11 +50,16 @@ function jsonError(message: string, status: number, field?: ErrorField) {
 
 function getClientKey(request: Request) {
   const forwardedFor =
-    request.headers.get("x-vercel-forwarded-for") ??
+    request.headers.get(
+      "x-vercel-forwarded-for"
+    ) ??
     request.headers.get("x-forwarded-for") ??
     request.headers.get("x-real-ip");
 
-  return forwardedFor?.split(",")[0]?.trim() || "unknown";
+  return (
+    forwardedFor?.split(",")[0]?.trim() ||
+    "unknown"
+  );
 }
 
 function checkRateLimit(request: Request) {
@@ -47,17 +70,36 @@ function checkRateLimit(request: Request) {
   if (!current || current.resetAt <= now) {
     rateLimitEntries.set(key, {
       count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
+      resetAt:
+        now + RATE_LIMIT_WINDOW_MS,
     });
-  } else if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return Math.max(1, Math.ceil((current.resetAt - now) / 1_000));
+  } else if (
+    current.count >=
+    RATE_LIMIT_MAX_REQUESTS
+  ) {
+    return Math.max(
+      1,
+      Math.ceil(
+        (current.resetAt - now) / 1_000
+      )
+    );
   } else {
     current.count += 1;
   }
 
-  if (rateLimitEntries.size > MAX_RATE_LIMIT_ENTRIES) {
-    for (const [entryKey, entry] of rateLimitEntries) {
-      if (entry.resetAt <= now || rateLimitEntries.size > MAX_RATE_LIMIT_ENTRIES) {
+  if (
+    rateLimitEntries.size >
+    MAX_RATE_LIMIT_ENTRIES
+  ) {
+    for (const [
+      entryKey,
+      entry,
+    ] of rateLimitEntries) {
+      if (
+        entry.resetAt <= now ||
+        rateLimitEntries.size >
+          MAX_RATE_LIMIT_ENTRIES
+      ) {
         rateLimitEntries.delete(entryKey);
       }
     }
@@ -66,7 +108,9 @@ function checkRateLimit(request: Request) {
   return null;
 }
 
-async function readBodyWithLimit(request: Request) {
+async function readBodyWithLimit(
+  request: Request
+) {
   if (!request.body) {
     return "";
   }
@@ -76,7 +120,8 @@ async function readBodyWithLimit(request: Request) {
   let receivedBytes = 0;
 
   while (true) {
-    const { done, value } = await reader.read();
+    const { done, value } =
+      await reader.read();
 
     if (done) {
       break;
@@ -84,7 +129,9 @@ async function readBodyWithLimit(request: Request) {
 
     receivedBytes += value.byteLength;
 
-    if (receivedBytes > MAX_REQUEST_BYTES) {
+    if (
+      receivedBytes > MAX_REQUEST_BYTES
+    ) {
       await reader.cancel();
       return null;
     }
@@ -92,7 +139,9 @@ async function readBodyWithLimit(request: Request) {
     chunks.push(value);
   }
 
-  const body = new Uint8Array(receivedBytes);
+  const body = new Uint8Array(
+    receivedBytes
+  );
   let offset = 0;
 
   for (const chunk of chunks) {
@@ -101,22 +150,32 @@ async function readBodyWithLimit(request: Request) {
   }
 
   try {
-    return new TextDecoder("utf-8", { fatal: true }).decode(body);
+    return new TextDecoder("utf-8", {
+      fatal: true,
+    }).decode(body);
   } catch {
     return "";
   }
 }
 
 function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+    value
+  );
 }
 
-export async function POST(request: Request) {
-  const retryAfter = checkRateLimit(request);
+export async function POST(
+  request: Request
+) {
+  const retryAfter =
+    checkRateLimit(request);
 
   if (retryAfter !== null) {
     return NextResponse.json(
-      { message: "Too many requests. Please try again later." },
+      {
+        message:
+          "Too many requests. Please try again later.",
+      },
       {
         status: 429,
         headers: {
@@ -133,69 +192,140 @@ export async function POST(request: Request) {
     .trim()
     .toLowerCase();
 
-  if (contentType !== "application/json") {
-    return jsonError("Content-Type must be application/json.", 415);
+  if (
+    contentType !== "application/json"
+  ) {
+    return jsonError(
+      "Content-Type must be application/json.",
+      415
+    );
   }
 
-  const contentLength = Number(request.headers.get("content-length"));
+  const contentLength = Number(
+    request.headers.get("content-length")
+  );
 
-  if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES) {
-    return jsonError("Request body is too large.", 413);
+  if (
+    Number.isFinite(contentLength) &&
+    contentLength > MAX_REQUEST_BYTES
+  ) {
+    return jsonError(
+      "Request body is too large.",
+      413
+    );
   }
 
-  const rawBody = await readBodyWithLimit(request);
+  const rawBody =
+    await readBodyWithLimit(request);
 
   if (rawBody === null) {
-    return jsonError("Request body is too large.", 413);
+    return jsonError(
+      "Request body is too large.",
+      413
+    );
   }
 
   let payload: Record<string, unknown>;
 
   try {
-    const parsed: unknown = JSON.parse(rawBody);
+    const parsed: unknown =
+      JSON.parse(rawBody);
 
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      return jsonError("Invalid request body.", 400);
+    if (
+      !parsed ||
+      typeof parsed !== "object" ||
+      Array.isArray(parsed)
+    ) {
+      return jsonError(
+        "Invalid request body.",
+        400
+      );
     }
 
-    payload = parsed as Record<string, unknown>;
+    payload =
+      parsed as Record<string, unknown>;
   } catch {
-    return jsonError("Invalid request body.", 400);
-  }
-
-  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
-  const currentTool =
-    typeof payload.currentTool === "string" ? payload.currentTool.trim() : "";
-  const pain = typeof payload.pain === "string" ? payload.pain.trim() : "";
-  const testerIntent =
-    typeof payload.testerIntent === "string" ? payload.testerIntent.trim() : "";
-  const website = typeof payload.website === "string" ? payload.website.trim() : "";
-
-  if (website) {
-    return NextResponse.json(
-      { message: "Joined waitlist." },
-      { headers: { "Cache-Control": "no-store" } }
+    return jsonError(
+      "Invalid request body.",
+      400
     );
   }
 
-  if (email.length > WAITLIST_FIELD_LIMITS.email) {
-    return jsonError("Email address is too long.", 400, "email");
+  const email =
+    typeof payload.email === "string"
+      ? payload.email.trim().toLowerCase()
+      : "";
+
+  const currentTool =
+    typeof payload.currentTool === "string"
+      ? payload.currentTool.trim()
+      : "";
+
+  const pain =
+    typeof payload.pain === "string"
+      ? payload.pain.trim()
+      : "";
+
+  const testerIntent =
+    typeof payload.testerIntent === "string"
+      ? payload.testerIntent.trim()
+      : "";
+
+  const website =
+    typeof payload.website === "string"
+      ? payload.website.trim()
+      : "";
+
+  const page =
+    payload.page === "fi-paper"
+      ? "fi-paper"
+      : "paper";
+
+  if (website) {
+    return NextResponse.json(
+      {
+        message: "Joined waitlist.",
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
   }
 
-  if (currentTool.length > WAITLIST_FIELD_LIMITS.currentTool) {
-    return jsonError("Current tool is too long.", 400, "currentTool");
+  if (
+    email.length >
+      WAITLIST_FIELD_LIMITS.email ||
+    !isValidEmail(email)
+  ) {
+    return jsonError(
+      "Please enter a valid email address.",
+      400,
+      "email"
+    );
   }
 
-  if (pain.length > WAITLIST_FIELD_LIMITS.pain) {
-    return jsonError("Feedback is too long.", 400, "pain");
+  if (
+    currentTool.length >
+    WAITLIST_FIELD_LIMITS.currentTool
+  ) {
+    return jsonError(
+      "Current tool is too long.",
+      400,
+      "currentTool"
+    );
   }
 
-  if (testerIntent.length > WAITLIST_FIELD_LIMITS.testerIntent) {
-    return jsonError("Testing preference is too long.", 400, "testerIntent");
-  }
-
-  if (!isValidEmail(email)) {
-    return jsonError("Please enter a valid email address.", 400, "email");
+  if (
+    pain.length >
+    WAITLIST_FIELD_LIMITS.pain
+  ) {
+    return jsonError(
+      "Feedback is too long.",
+      400,
+      "pain"
+    );
   }
 
   if (!isTesterIntent(testerIntent)) {
@@ -206,42 +336,69 @@ export async function POST(request: Request) {
     );
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+  const serviceRoleKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
-    return jsonError("Waitlist is not configured yet.", 500);
+    return jsonError(
+      "Waitlist is not configured yet.",
+      500
+    );
   }
 
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
-    auth: {
-      persistSession: false,
-    },
-  });
+  const supabase = createClient(
+    supabaseUrl,
+    serviceRoleKey,
+    {
+      auth: {
+        persistSession: false,
+      },
+    }
+  );
 
-  const { error } = await supabase.from("waitlist_submissions").insert({
-    email,
-    current_tool: currentTool || null,
-    pain: pain || null,
-    tester_intent: testerIntent,
-    source: "landing-page",
-    product: "paper",
-    page: "home",
-  });
+  const { error } = await supabase
+    .from("waitlist_submissions")
+    .insert({
+      email,
+      current_tool: currentTool || null,
+      pain: pain || null,
+      tester_intent: testerIntent,
+      source: "landing-page",
+      product: "paper",
+      page,
+    });
 
   if (error) {
     if (error.code === "23505") {
       return NextResponse.json(
-        { message: "Joined waitlist." },
-        { headers: { "Cache-Control": "no-store" } }
+        {
+          message: "Joined waitlist.",
+        },
+        {
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        }
       );
     }
 
-    return jsonError("Could not save your waitlist request.", 500);
+    return jsonError(
+      "Could not save your waitlist request.",
+      500
+    );
   }
 
   return NextResponse.json(
-    { message: "Joined waitlist." },
-    { headers: { "Cache-Control": "no-store" } }
+    {
+      message: "Joined waitlist.",
+    },
+    {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    }
   );
 }
