@@ -5,7 +5,7 @@ import {
 } from "@/lib/contact";
 import type { Locale } from "@/lib/site";
 import { siteConfig } from "@/lib/site";
-import { createClient } from "@supabase/supabase-js";
+import { createSupabaseAdminClient } from "@/lib/supabase-admin";
 import { NextResponse } from "next/server";
 
 type RateLimitEntry = {
@@ -448,28 +448,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabase = createSupabaseAdminClient();
   const resendApiKey = process.env.RESEND_API_KEY;
 
-  if (!supabaseUrl || !serviceRoleKey) {
-    return jsonError(
-      "Contact storage is not configured.",
-      500
-    );
+  if (!supabase) {
+    return jsonError("Contact storage is not configured.", 500);
   }
-
-  const supabase = createClient(
-    supabaseUrl,
-    serviceRoleKey,
-    {
-      auth: {
-        persistSession: false,
-      },
-    }
-  );
 
   const { data: enquiry, error: insertError } =
     await supabase

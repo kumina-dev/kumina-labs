@@ -1,10 +1,8 @@
+import { createSupabaseAdminClient } from "@/lib/supabase-admin";
 import {
   isTesterIntent,
   WAITLIST_FIELD_LIMITS,
 } from "@/lib/waitlist";
-import {
-  createClient,
-} from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 type ErrorField =
@@ -336,28 +334,11 @@ export async function POST(
     );
   }
 
-  const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabase = createSupabaseAdminClient();
 
-  const serviceRoleKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!supabaseUrl || !serviceRoleKey) {
-    return jsonError(
-      "Waitlist is not configured yet.",
-      500
-    );
+  if (!supabase) {
+    return jsonError("Waitlist is not configured yet.", 500);
   }
-
-  const supabase = createClient(
-    supabaseUrl,
-    serviceRoleKey,
-    {
-      auth: {
-        persistSession: false,
-      },
-    }
-  );
 
   const { error } = await supabase
     .from("waitlist_submissions")
