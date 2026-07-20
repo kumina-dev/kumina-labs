@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "Kumina Labs",
   productName: "Paper",
   url: "https://paper-kumina.vercel.app",
+  privacyEmail: "ville.syrjala@protonmail.com",
   description:
     "Paper is a private, fast, offline-first writing and notes tool from Kumina Labs.",
   tagline: "Write quickly. Find it later. Own your data.",

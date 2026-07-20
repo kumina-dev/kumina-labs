@@ -33,7 +33,7 @@ export function ProductMockup() {
       icon: "↥",
     },
   ];
-  
+
   return (
     <div className="relative mx-auto w-full min-w-0 max-w-2xl perspective-[1600px]">
       <div className="absolute -inset-6 rounded-full bg-indigo-500/20 blur-3xl sm:-inset-12" />
@@ -41,7 +41,7 @@ export function ProductMockup() {
       <div className="absolute -right-8 top-20 h-56 w-56 rounded-full bg-violet-400/15 blur-3xl" />
       <div className="absolute -left-10 bottom-12 h-44 w-44 rounded-full bg-cyan-300/10 blur-3xl" />
 
-      <div className="relative origin-center transform-gpu rounded-[1.5rem] border border-white/15 bg-neutral-950/95 p-2 shadow-2xl shadow-black/80 sm:rotate-z-3 sm:rounded-[2.25rem] sm:p-3">
+      <div className="relative origin-center transform-gpu rounded-3xl border border-white/15 bg-neutral-950/95 p-2 shadow-2xl shadow-black/80 sm:rotate-z-3 sm:rounded-[2.25rem] sm:p-3">
         <div className="overflow-hidden rounded-[1.1rem] border border-white/10 bg-[#0b0b0d] shadow-inner shadow-white/5 sm:rounded-[1.75rem]">
           <div className="flex items-center justify-between border-b border-white/10 bg-white/4 px-3 py-3 sm:px-5 sm:py-4">
             <div className="flex items-center gap-2">
@@ -58,10 +58,10 @@ export function ProductMockup() {
 
           <div className="grid sm:min-h-107.5 sm:grid-cols-[0.34fr_0.66fr]">
             <aside className="hidden border-r border-white/10 bg-black/25 px-5 py-6 sm:block">
-              <button className="mb-7 inline-flex -rotate-2 items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-sm font-semibold text-neutral-950 shadow-xl shadow-white/10">
+              <div className="mb-7 inline-flex -rotate-2 items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-sm font-semibold text-neutral-950 shadow-xl shadow-white/10">
                 <span className="text-lg leading-none">+</span>
                 New
-              </button>
+              </div>
 
               <div className="space-y-4">
                 {notes.map((note) => (
@@ -76,7 +76,7 @@ export function ProductMockup() {
                     <p className="text-base font-semibold leading-tight text-white">
                       {note.title}
                     </p>
-                    <p className="mt-1 text-sm italic leading-tight text-neutral-500">
+                    <p className="mt-1 text-sm italic leading-tight text-neutral-400">
                       {note.meta}
                     </p>
                   </div>
@@ -88,7 +88,7 @@ export function ProductMockup() {
                   <span className="text-lg leading-none">⌕</span>
                   <span className="text-sm">Search</span>
                 </div>
-                <p className="mt-1 text-sm italic text-neutral-500">offline</p>
+                <p className="mt-1 text-sm italic text-neutral-400">offline</p>
               </div>
             </aside>
 
@@ -98,11 +98,11 @@ export function ProductMockup() {
                 Offline
               </div>
 
-              <p className="text-base italic text-neutral-500 sm:text-lg">Draft</p>
+              <p className="text-base italic text-neutral-400 sm:text-lg">Draft</p>
 
-              <h3 className="mt-6 max-w-sm text-2xl font-semibold leading-[1.15] tracking-[-0.045em] text-white sm:mt-7 sm:text-4xl sm:leading-[1.12]">
+              <h2 className="mt-6 max-w-sm text-2xl font-semibold leading-[1.15] tracking-[-0.045em] text-white sm:mt-7 sm:text-4xl sm:leading-[1.12]">
                 A quieter place to write
-              </h3>
+              </h2>
 
               <p className="mt-5 max-w-md text-base leading-7 text-neutral-300 sm:mt-7 sm:text-lg sm:leading-8">
                 Start with a blank paper. No workspace setup. No account wall.

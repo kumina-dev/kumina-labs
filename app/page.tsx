@@ -73,7 +73,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p className="mt-5 text-sm text-neutral-500">
+          <p className="mt-5 text-sm text-neutral-400">
             No workspace bloat. No account-first flow. No giant platform
             promise.
           </p>
@@ -135,7 +135,7 @@ export default function HomePage() {
               {delayedFeatures.map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-sm text-neutral-400"
+                    className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-sm text-neutral-300"
                 >
                   {item}
                 </span>
@@ -170,9 +170,17 @@ export default function HomePage() {
       </Section>
 
       <footer className="relative z-10 border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-8 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-8 text-sm text-neutral-400 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>© {new Date().getFullYear()} Kumina Labs.</p>
-          <p>Building practical, privacy-conscious software products.</p>
+          <div className="flex flex-col gap-2 sm:items-end">
+            <p>Building practical, privacy-conscious software products.</p>
+            <Link
+              href="/privacy"
+              className="text-neutral-300 underline decoration-neutral-600 underline-offset-4 transition hover:text-white"
+            >
+              Privacy
+            </Link>
+          </div>
         </div>
       </footer>
     </main>

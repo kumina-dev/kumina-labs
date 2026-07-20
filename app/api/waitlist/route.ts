@@ -1,18 +1,110 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import {
+  isTesterIntent,
+  WAITLIST_FIELD_LIMITS,
+} from "@/lib/waitlist";
 
-type WaitlistPayload = {
-  email?: unknown;
-  currentTool?: unknown;
-  pain?: unknown;
-  testerIntent?: unknown;
-  source?: unknown;
-  product?: unknown;
-  page?: unknown;
+type ErrorField = "email" | "currentTool" | "pain" | "testerIntent";
+
+type RateLimitEntry = {
+  count: number;
+  resetAt: number;
 };
 
-function getString(value: unknown) {
-  return typeof value === "string" ? value.trim() : "";
+const MAX_REQUEST_BYTES = 8_192;
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1_000;
+const MAX_RATE_LIMIT_ENTRIES = 5_000;
+const rateLimitEntries = new Map<string, RateLimitEntry>();
+
+function jsonError(message: string, status: number, field?: ErrorField) {
+  return NextResponse.json(
+    { message, ...(field ? { field } : {}) },
+    {
+      status,
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    }
+  );
+}
+
+function getClientKey(request: Request) {
+  const forwardedFor =
+    request.headers.get("x-vercel-forwarded-for") ??
+    request.headers.get("x-forwarded-for") ??
+    request.headers.get("x-real-ip");
+
+  return forwardedFor?.split(",")[0]?.trim() || "unknown";
+}
+
+function checkRateLimit(request: Request) {
+  const now = Date.now();
+  const key = getClientKey(request);
+  const current = rateLimitEntries.get(key);
+
+  if (!current || current.resetAt <= now) {
+    rateLimitEntries.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+  } else if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return Math.max(1, Math.ceil((current.resetAt - now) / 1_000));
+  } else {
+    current.count += 1;
+  }
+
+  if (rateLimitEntries.size > MAX_RATE_LIMIT_ENTRIES) {
+    for (const [entryKey, entry] of rateLimitEntries) {
+      if (entry.resetAt <= now || rateLimitEntries.size > MAX_RATE_LIMIT_ENTRIES) {
+        rateLimitEntries.delete(entryKey);
+      }
+    }
+  }
+
+  return null;
+}
+
+async function readBodyWithLimit(request: Request) {
+  if (!request.body) {
+    return "";
+  }
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let receivedBytes = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+      break;
+    }
+
+    receivedBytes += value.byteLength;
+
+    if (receivedBytes > MAX_REQUEST_BYTES) {
+      await reader.cancel();
+      return null;
+    }
+
+    chunks.push(value);
+  }
+
+  const body = new Uint8Array(receivedBytes);
+  let offset = 0;
+
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  try {
+    return new TextDecoder("utf-8", { fatal: true }).decode(body);
+  } catch {
+    return "";
+  }
 }
 
 function isValidEmail(value: string) {
@@ -20,36 +112,97 @@ function isValidEmail(value: string) {
 }
 
 export async function POST(request: Request) {
-  let payload: WaitlistPayload;
+  const retryAfter = checkRateLimit(request);
+
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { message: "Too many requests. Please try again later." },
+      {
+        status: 429,
+        headers: {
+          "Cache-Control": "no-store",
+          "Retry-After": String(retryAfter),
+        },
+      }
+    );
+  }
+
+  const contentType = request.headers
+    .get("content-type")
+    ?.split(";", 1)[0]
+    .trim()
+    .toLowerCase();
+
+  if (contentType !== "application/json") {
+    return jsonError("Content-Type must be application/json.", 415);
+  }
+
+  const contentLength = Number(request.headers.get("content-length"));
+
+  if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES) {
+    return jsonError("Request body is too large.", 413);
+  }
+
+  const rawBody = await readBodyWithLimit(request);
+
+  if (rawBody === null) {
+    return jsonError("Request body is too large.", 413);
+  }
+
+  let payload: Record<string, unknown>;
 
   try {
-    payload = (await request.json()) as WaitlistPayload;
+    const parsed: unknown = JSON.parse(rawBody);
+
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return jsonError("Invalid request body.", 400);
+    }
+
+    payload = parsed as Record<string, unknown>;
   } catch {
+    return jsonError("Invalid request body.", 400);
+  }
+
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const currentTool =
+    typeof payload.currentTool === "string" ? payload.currentTool.trim() : "";
+  const pain = typeof payload.pain === "string" ? payload.pain.trim() : "";
+  const testerIntent =
+    typeof payload.testerIntent === "string" ? payload.testerIntent.trim() : "";
+  const website = typeof payload.website === "string" ? payload.website.trim() : "";
+
+  if (website) {
     return NextResponse.json(
-      { message: "Invalid request body." },
-      { status: 400 }
+      { message: "Joined waitlist." },
+      { headers: { "Cache-Control": "no-store" } }
     );
   }
 
-  const email = getString(payload.email).toLowerCase();
-  const currentTool = getString(payload.currentTool);
-  const pain = getString(payload.pain);
-  const testerIntent = getString(payload.testerIntent);
-  const source = getString(payload.source) || "landing-page";
-  const product = getString(payload.product) || "paper";
-  const page = getString(payload.page) || "home";
+  if (email.length > WAITLIST_FIELD_LIMITS.email) {
+    return jsonError("Email address is too long.", 400, "email");
+  }
+
+  if (currentTool.length > WAITLIST_FIELD_LIMITS.currentTool) {
+    return jsonError("Current tool is too long.", 400, "currentTool");
+  }
+
+  if (pain.length > WAITLIST_FIELD_LIMITS.pain) {
+    return jsonError("Feedback is too long.", 400, "pain");
+  }
+
+  if (testerIntent.length > WAITLIST_FIELD_LIMITS.testerIntent) {
+    return jsonError("Testing preference is too long.", 400, "testerIntent");
+  }
 
   if (!isValidEmail(email)) {
-    return NextResponse.json(
-      { message: "Please enter a valid email address." },
-      { status: 400 }
-    );
+    return jsonError("Please enter a valid email address.", 400, "email");
   }
 
-  if (!testerIntent) {
-    return NextResponse.json(
-      { message: "Please choose whether you're open to testing." },
-      { status: 400 }
+  if (!isTesterIntent(testerIntent)) {
+    return jsonError(
+      "Please choose whether you're open to testing.",
+      400,
+      "testerIntent"
     );
   }
 
@@ -57,10 +210,7 @@ export async function POST(request: Request) {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
-    return NextResponse.json(
-      { message: "Waitlist is not configured yet." },
-      { status: 500 }
-    );
+    return jsonError("Waitlist is not configured yet.", 500);
   }
 
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
@@ -69,29 +219,29 @@ export async function POST(request: Request) {
     },
   });
 
-  const { error } = await supabase.from("waitlist_submissions").upsert(
-    {
-      email,
-      current_tool: currentTool || null,
-      pain: pain || null,
-      tester_intent: testerIntent,
-      source,
-      product,
-      page,
-    },
-    {
-      onConflict: "email",
-    }
-  );
+  const { error } = await supabase.from("waitlist_submissions").insert({
+    email,
+    current_tool: currentTool || null,
+    pain: pain || null,
+    tester_intent: testerIntent,
+    source: "landing-page",
+    product: "paper",
+    page: "home",
+  });
 
   if (error) {
-    return NextResponse.json(
-      { message: "Could not save your waitlist request." },
-      { status: 500 }
-    );
+    if (error.code === "23505") {
+      return NextResponse.json(
+        { message: "Joined waitlist." },
+        { headers: { "Cache-Control": "no-store" } }
+      );
+    }
+
+    return jsonError("Could not save your waitlist request.", 500);
   }
 
-  return NextResponse.json({
-    message: "Joined waitlist.",
-  });
+  return NextResponse.json(
+    { message: "Joined waitlist." },
+    { headers: { "Cache-Control": "no-store" } }
+  );
 }

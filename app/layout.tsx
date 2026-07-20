@@ -30,6 +30,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Kumina Labs" }],
   creator: "Kumina Labs",
   publisher: "Kumina Labs",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     url: siteConfig.url,
