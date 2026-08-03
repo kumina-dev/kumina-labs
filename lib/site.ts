@@ -8,6 +8,7 @@ export const siteConfig = {
   url: configuredUrl || "https://paper-kumina.vercel.app",
   contactEmail: "ville.syrjala@protonmail.com",
   paperTagline: "Write quickly. Find it later. Own your data.",
+  paperUrl: "https://kumina-paper.vercel.app",
 };
 
 export function localizedPath(locale: Locale, path = "/") {

@@ -2,7 +2,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { Section } from "@/components/Section";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { paperContent, studioContent } from "@/lib/content";
-import { localizedPath, siteConfig, type Locale } from "@/lib/site";
+import { siteConfig, type Locale } from "@/lib/site";
 import Link from "next/link";
 
 function ArrowIcon() {
@@ -168,7 +168,7 @@ function PaperPreview({ locale }: { locale: Locale }) {
 
 export function StudioPage({ locale }: { locale: Locale }) {
   const copy = studioContent[locale];
-  const paperHref = localizedPath(locale, "/paper");
+  const paperHref = siteConfig.paperUrl;
   const emailSubject = encodeURIComponent(
     locale === "en" ? "Website enquiry" : "Verkkosivukysely"
   );

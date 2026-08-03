@@ -163,8 +163,8 @@ export const studioContent = {
       description:
         "Paper is a private, fast, offline-first writing and notes tool. It is also a concrete example of the focused products Kumina Labs creates.",
       tagline: "Write quickly. Find it later. Own your data.",
-      cta: "Explore Paper",
-      status: "Early product · Waitlist open",
+      cta: "Open Paper",
+      status: "Available now · Early version",
     },
     about: {
       eyebrow: "About",
@@ -310,8 +310,8 @@ export const studioContent = {
       description:
         "Paper on yksityinen, nopea ja offline-first-kirjoitus- ja muistiinpanotyökalu. Se on myös konkreettinen esimerkki Kumina Labsin kehittämistä rajatuista tuotteista.",
       tagline: "Kirjoita nopeasti. Löydä myöhemmin. Omista tietosi.",
-      cta: "Tutustu Paperiin",
-      status: "Varhainen tuote · Odotuslista avoinna",
+      cta: "Avaa Paper",
+      status: "Käytettävissä nyt · Varhainen versio",
     },
     about: {
       eyebrow: "Tekijä",
