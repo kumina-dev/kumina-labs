@@ -47,7 +47,7 @@ export function SiteHeader({
   const alternateHref = localizedPath(alternateLocale, alternatePath);
   const ctaHref =
     page === "paper"
-      ? "#waitlist"
+      ? siteConfig.paperUrl
       : page === "legal"
         ? localizedPath(locale, "/#contact")
         : "#contact";
@@ -64,9 +64,7 @@ export function SiteHeader({
         </Link>
 
         <nav
-          aria-label={
-            locale === "en" ? "Main navigation" : "Päänavigaatio"
-          }
+          aria-label={locale === "en" ? "Main navigation" : "Päänavigaatio"}
           className="hidden items-center gap-7 text-sm text-(--muted) lg:flex"
         >
           {navigation.map((item) => (
@@ -97,11 +95,12 @@ export function SiteHeader({
             <span className="hidden sm:inline">
               {page === "paper" ? copy.paperCta : copy.studioCta}
             </span>
+
             <span className="sm:hidden">
               {page === "paper"
                 ? locale === "en"
-                  ? "Waitlist"
-                  : "Lista"
+                  ? "Open"
+                  : "Avaa"
                 : locale === "en"
                   ? "Contact"
                   : "Yhteys"}
@@ -141,18 +140,21 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           >
             {copy.services}
           </Link>
+
           <Link
             href={localizedPath(locale, "/paper")}
             className="transition hover:text-(--foreground)"
           >
             {copy.product}
           </Link>
+
           <a
             href={`mailto:${siteConfig.contactEmail}`}
             className="transition hover:text-(--foreground)"
           >
             {siteConfig.contactEmail}
           </a>
+
           <Link
             href={localizedPath(locale, "/privacy")}
             className="transition hover:text-(--foreground)"

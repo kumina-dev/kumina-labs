@@ -1,19 +1,11 @@
 import { ProductMockup } from "@/components/ProductMockup";
 import { Section } from "@/components/Section";
-import {
-  SiteFooter,
-  SiteHeader
-} from "@/components/SiteChrome";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { paperContent } from "@/lib/content";
-import type { Locale } from "@/lib/site";
+import { siteConfig, type Locale } from "@/lib/site";
 import Link from "next/link";
 
-export function PaperPage({
-  locale,
-}: {
-  locale: Locale;
-}) {
+export function PaperPage({ locale }: { locale: Locale }) {
   const copy = paperContent[locale];
 
   return (
@@ -39,7 +31,7 @@ export function PaperPage({
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="#waitlist"
+                href={siteConfig.paperUrl}
                 className="inline-flex h-13 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
               >
                 {copy.hero.primaryCta}
@@ -99,17 +91,12 @@ export function PaperPage({
             </h3>
 
             <ul className="mt-6 space-y-4 text-neutral-300">
-              {copy.principles.current.map(
-                (principle) => (
-                  <li
-                    key={principle}
-                    className="flex gap-3 leading-7"
-                  >
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-violet-300" />
-                    {principle}
-                  </li>
-                )
-              )}
+              {copy.principles.current.map((principle) => (
+                <li key={principle} className="flex gap-3 leading-7">
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-violet-300" />
+                  {principle}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -133,24 +120,21 @@ export function PaperPage({
       </Section>
 
       <Section
-        id="waitlist"
-        eyebrow={copy.waitlist.eyebrow}
-        title={copy.waitlist.title}
-        description={copy.waitlist.description}
+        id="open"
+        eyebrow={copy.open.eyebrow}
+        title={copy.open.title}
+        description={copy.open.description}
         tone="raised"
       >
-        <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[1.75rem] border border-white/10 bg-[#0d0d12] p-6 sm:p-8">
             <h3 className="text-xl font-semibold tracking-[-0.03em]">
-              {copy.waitlist.testersTitle}
+              {copy.open.detailsTitle}
             </h3>
 
             <ul className="mt-6 space-y-4 text-neutral-300">
-              {copy.waitlist.testers.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 leading-7"
-                >
+              {copy.open.details.map((item) => (
+                <li key={item} className="flex gap-3 leading-7">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-violet-300" />
                   {item}
                 </li>
@@ -158,7 +142,28 @@ export function PaperPage({
             </ul>
           </div>
 
-          <WaitlistForm locale={locale} />
+          <div className="flex flex-col justify-between rounded-[1.75rem] bg-white p-6 text-neutral-950 sm:p-8">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-violet-700">
+                {copy.open.status}
+              </p>
+
+              <h3 className="mt-6 text-3xl font-semibold tracking-[-0.045em]">
+                {copy.open.ctaTitle}
+              </h3>
+
+              <p className="mt-4 leading-7 text-neutral-600">
+                {copy.open.ctaDescription}
+              </p>
+            </div>
+
+            <Link
+              href={siteConfig.paperUrl}
+              className="mt-10 inline-flex h-13 items-center justify-center rounded-full bg-neutral-950 px-6 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            >
+              {copy.open.cta}
+            </Link>
+          </div>
         </div>
       </Section>
 

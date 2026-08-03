@@ -9,10 +9,10 @@ export const chromeContent = {
     paperNavigation: [
       { label: "Overview", href: "#overview" },
       { label: "Principles", href: "#principles" },
-      { label: "Waitlist", href: "#waitlist" },
+      { label: "Open Paper", href: "#open" },
     ],
     studioCta: "Start a conversation",
-    paperCta: "Join waitlist",
+    paperCta: "Open Paper",
     languageLabel: "Suomeksi",
     languageCode: "FI",
     footerLine: "Independent web studio and product lab in Finland.",
@@ -30,10 +30,10 @@ export const chromeContent = {
     paperNavigation: [
       { label: "Yleiskuva", href: "#overview" },
       { label: "Periaatteet", href: "#principles" },
-      { label: "Odotuslista", href: "#waitlist" },
+      { label: "Avaa Paper", href: "#open" },
     ],
     studioCta: "Ota yhteyttä",
-    paperCta: "Liity odotuslistalle",
+    paperCta: "Avaa Paper",
     languageLabel: "In English",
     languageCode: "EN",
     footerLine: "Itsenäinen verkkostudio ja tuotelaboratorio Suomessa.",
@@ -405,15 +405,15 @@ export const paperContent = {
       title: "A calmer place to write things down.",
       description:
         "Paper is a private, fast, offline-first writing and notes tool for drafts, thoughts, ideas and anything you want to find later.",
-      primaryCta: "Join the Paper waitlist",
+      primaryCta: "Open Paper",
       secondaryCta: "See what Paper is",
-      note: "No workspace bloat. No account-first flow. No giant platform promise.",
+      note: "Available now. No account, onboarding maze or platform-sized promise.",
     },
     overview: {
       eyebrow: "Paper",
       title: "Write quickly. Find it later. Own your data.",
       description:
-        "Paper is intentionally small. The first version should prove whether people want a fast, local-first place to write, search and export their work.",
+        "Paper is intentionally small: a fast, local-first place to write, search and export without turning every note into a workspace.",
       features: [
         {
           title: "Start writing immediately",
@@ -423,7 +423,7 @@ export const paperContent = {
         {
           title: "Saved locally first",
           description:
-            "Paper is designed around local-first storage, so writing stays fast and available offline.",
+            "Paper stores writing locally, keeping it fast and available without depending on an account.",
         },
         {
           title: "Find notes later",
@@ -461,18 +461,23 @@ export const paperContent = {
         "Enterprise features",
       ],
     },
-    waitlist: {
-      eyebrow: "Waitlist",
-      title: "Help shape the first version of Paper.",
+    open: {
+      eyebrow: "Available now",
+      title: "Open Paper and start writing.",
       description:
-        "The next goal is finding a small group of people who actually want a quieter writing tool and are willing to test an early version.",
-      testersTitle: "Good early testers probably:",
-      testers: [
-        "Write notes, drafts or ideas often.",
-        "Feel slowed down by heavy workspace apps.",
-        "Care about keeping access to their own writing.",
-        "Would rather test a focused tool than a huge platform.",
+        "Paper runs in the browser and stores your notes locally. There is no account or onboarding flow between you and a blank page.",
+      detailsTitle: "What to expect",
+      details: [
+        "No account or sign-in.",
+        "Notes stored locally in your browser.",
+        "Search across titles and writing.",
+        "Export when you want a copy outside Paper.",
       ],
+      status: "Early version",
+      ctaTitle: "Ready when you are.",
+      ctaDescription:
+        "Open Paper, create a note and decide for yourself whether it earns a place in your workflow.",
+      cta: "Open Paper",
     },
     mockup: {
       saved: "Saved",
@@ -499,15 +504,15 @@ export const paperContent = {
       title: "Rauhallisempi paikka kirjoittaa asiat muistiin.",
       description:
         "Paper on yksityinen, nopea ja offline-first-kirjoitus- ja muistiinpanotyökalu luonnoksille, ajatuksille, ideoille ja kaikelle, minkä haluat löytää myöhemmin.",
-      primaryCta: "Liity Paperin odotuslistalle",
+      primaryCta: "Avaa Paper",
       secondaryCta: "Katso mikä Paper on",
-      note: "Ei työtilahässäkkää. Ei pakollista tiliä. Ei lupausta valtavasta alustasta.",
+      note: "Käytettävissä nyt. Ei käyttäjätiliä, käyttöönottorumbaa tai lupausta valtavasta alustasta.",
     },
     overview: {
       eyebrow: "Paper",
       title: "Kirjoita nopeasti. Löydä myöhemmin. Omista tietosi.",
       description:
-        "Paper on tarkoituksella pieni. Ensimmäisen version tehtävä on selvittää, haluavatko ihmiset nopean, ensisijaisesti paikallisesti toimivan paikan tekstin kirjoittamiseen, löytämiseen ja viemiseen.",
+        "Paper on tarkoituksella pieni: nopea ja local-first-paikka kirjoittamiseen, hakemiseen ja vientiin ilman, että jokaisesta muistiinpanosta tehdään työtila.",
       features: [
         {
           title: "Aloita kirjoittaminen heti",
@@ -517,7 +522,7 @@ export const paperContent = {
         {
           title: "Tallennetaan ensin laitteelle",
           description:
-            "Paper suunnitellaan local-first-periaatteella: kirjoittaminen pysyy nopeana ja toimii myös ilman verkkoyhteyttä.",
+            "Paper tallentaa kirjoitukset paikallisesti, joten käyttö pysyy nopeana eikä riipu käyttäjätilistä.",
         },
         {
           title: "Löydä muistiinpanot myöhemmin",
@@ -555,18 +560,23 @@ export const paperContent = {
         "Yritystason ominaisuudet",
       ],
     },
-    waitlist: {
-      eyebrow: "Odotuslista",
-      title: "Auta muovaamaan Paperin ensimmäistä versiota.",
+    open: {
+      eyebrow: "Käytettävissä nyt",
+      title: "Avaa Paper ja aloita kirjoittaminen.",
       description:
-        "Seuraava tavoite on löytää pieni joukko ihmisiä, jotka oikeasti haluavat rauhallisemman kirjoitustyökalun ja ovat valmiita testaamaan varhaista versiota.",
-      testersTitle: "Hyvä varhainen testaaja todennäköisesti:",
-      testers: [
-        "Kirjoittaa usein muistiinpanoja, luonnoksia tai ideoita.",
-        "Kokee raskaat työtilasovellukset hitaiksi.",
-        "Haluaa säilyttää pääsyn omiin kirjoituksiinsa.",
-        "Testaa mieluummin rajattua työkalua kuin valtavaa alustaa.",
+        "Paper toimii selaimessa ja tallentaa muistiinpanot paikallisesti. Tyhjän sivun ja sinun välissäsi ei ole käyttäjätiliä tai käyttöönottorumbaa.",
+      detailsTitle: "Mitä voit odottaa",
+      details: [
+        "Ei käyttäjätiliä tai kirjautumista.",
+        "Muistiinpanot tallennetaan paikallisesti selaimeesi.",
+        "Haku otsikoista ja tekstisisällöstä.",
+        "Vie kirjoituksesi, kun haluat kopion Paperin ulkopuolelle.",
       ],
+      status: "Varhainen versio",
+      ctaTitle: "Valmis, kun sinä olet.",
+      ctaDescription:
+        "Avaa Paper, luo muistiinpano ja päätä itse, ansaitseeko se paikan työnkulussasi.",
+      cta: "Avaa Paper",
     },
     mockup: {
       saved: "Tallennettu",
